@@ -1,11 +1,16 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://java.sun.com/jsf/html">
 <h:head/>
 <h:body>
-    Hello world
+    
     <h:form>
-        <h:inputText id="txt" value="#{bean.text}"/>
-        <h:commandButton id="send" action="#{bean.echo}" value="echo"/>
-        <h:outputText id="response" value="#{bean.response}"/>
+        username: 
+        <h:inputText id="username" value="#{Login.username}"/>
+        password: 
+        <h:inputSecret id="password" value="#{Login.password}"/>
+        <h:commandButton id="send" action="#{Login.checkMe}" value="#{Login.buttonText}"/>
+        
+        
+        <h:outputText id="response" value="#{Login.response}"/>
     </h:form>
 </h:body>
 </html>
