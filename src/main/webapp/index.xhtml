@@ -1,16 +1,41 @@
-<html xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://java.sun.com/jsf/html">
-<h:head/>
-<h:body>
-    
-    <h:form>
-        username: 
-        <h:inputText id="username" value="#{Login.username}"/>
-        password: 
-        <h:inputSecret id="password" value="#{Login.password}"/>
-        <h:commandButton id="send" action="#{Login.checkMe}" value="#{Login.buttonText}"/>
-        
-        aa
-        <h:outputText id="response" value="#{Login.response}"/>
-    </h:form>
-</h:body>
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:rich="http://richfaces.org/rich"
+      xmlns:h="http://java.sun.com/jsf/html">
+    <h:head/>
+    <h:body>
+
+        <ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://java.sun.com/jsf/html"
+                        xmlns:f="http://java.sun.com/jsf/core" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:a4j="http://richfaces.org/a4j"
+                        xmlns:rich="http://richfaces.org/rich">
+            <rich:dataTable  var="record" value="#{controler.records}">
+                <f:facet name="header">
+                    <rich:columnGroup>
+                        <rich:column rowspan="2">
+                        </rich:column>
+                        <rich:column colspan="3">
+                            <h:outputText value="Expenses" />
+                        </rich:column>
+                        <rich:column rowspan="2">
+                            <h:outputText value="subtotals" />
+                        </rich:column>
+                        <rich:column breakRowBefore="true">
+                            <h:outputText value="Meals" />
+                        </rich:column>
+                        <rich:column>
+                            <h:outputText value="Hotels" />
+                        </rich:column>
+                        <rich:column>
+                            <h:outputText value="Transport" />
+                        </rich:column>
+                    </rich:columnGroup>
+                </f:facet>
+
+               
+            </rich:dataTable>
+        </ui:composition>
+        <br />
+        <h:link outcome="welcomeRichfaces" value="Richfaces welcome page" />
+    </h:body>
 </html>
