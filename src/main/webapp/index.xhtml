@@ -1,41 +1,54 @@
 <?xml version='1.0' encoding='UTF-8' ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:rich="http://richfaces.org/rich"
-      xmlns:h="http://java.sun.com/jsf/html">
-    <h:head/>
-    <h:body>
 
-        <ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://java.sun.com/jsf/html"
-                        xmlns:f="http://java.sun.com/jsf/core" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:a4j="http://richfaces.org/a4j"
-                        xmlns:rich="http://richfaces.org/rich">
-            <rich:dataTable  var="record" value="#{controler.records}">
-                <f:facet name="header">
-                    <rich:columnGroup>
-                        <rich:column rowspan="2">
-                        </rich:column>
-                        <rich:column colspan="3">
-                            <h:outputText value="Expenses" />
-                        </rich:column>
-                        <rich:column rowspan="2">
-                            <h:outputText value="subtotals" />
-                        </rich:column>
-                        <rich:column breakRowBefore="true">
-                            <h:outputText value="Meals" />
-                        </rich:column>
-                        <rich:column>
-                            <h:outputText value="Hotels" />
-                        </rich:column>
-                        <rich:column>
-                            <h:outputText value="Transport" />
-                        </rich:column>
-                    </rich:columnGroup>
-                </f:facet>
 
-               
-            </rich:dataTable>
-        </ui:composition>
-        <br />
-        <h:link outcome="welcomeRichfaces" value="Richfaces welcome page" />
-    </h:body>
-</html>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:rich="http://richfaces.org/rich"
+                xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://java.sun.com/jsf/core" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:a4j="http://richfaces.org/a4j">
+    <h:form>
+        <b>Name:</b> 
+        <h:inputText id="name" value="#{controler.name}"/>
+        <b>Last name:</b> 
+        <h:inputText id="lastName" value="#{controler.lastName}"/>
+        <b>Age: ></b> 
+        <rich:inputNumberSlider value="50" />
+        <b> and &lt;</b> 
+        <rich:inputNumberSlider value="#{controler.greaterNumber}" />
+
+        <h:commandButton id="send" action="#{controler.setFilter}" value="Set filter"/>
+
+    </h:form>
+
+    <rich:dataTable style="width:700px" var="record" value="#{controler.records}">
+        <f:facet name="header">
+            <rich:columnGroup>
+                <rich:column>
+                    <h:outputText value="Name" />
+                </rich:column>
+                <rich:column>
+                    <h:outputText value="Last name" />
+                </rich:column>
+                <rich:column>
+                    <h:outputText value="Age" />
+                </rich:column>
+            </rich:columnGroup>
+        </f:facet>
+
+
+        <rich:columnGroup>
+            <rich:column>
+                <h:outputText value="#{record.name}" />
+            </rich:column>
+            <rich:column>
+                <h:outputText value="#{record.lastName}" />
+            </rich:column>
+            <rich:column>
+                <h:outputText value="#{record.age}" />
+            </rich:column>
+        </rich:columnGroup>
+
+    </rich:dataTable>
+
+</ui:composition>
+
+

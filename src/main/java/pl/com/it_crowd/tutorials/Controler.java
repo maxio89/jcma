@@ -1,82 +1,66 @@
 package pl.com.it_crowd.tutorials;
 
-import javax.faces.bean.ManagedBean;
-import javax.faces.bean.SessionScoped;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+import javax.faces.bean.ManagedBean;
+import javax.faces.bean.RequestScoped;
         
-@SessionScoped
+@RequestScoped
 @ManagedBean
 public class Controler implements Serializable {
 // ------------------------------ FIELDS ------------------------------
 
-    private String response;
-    private String password;
-    private String username;
-    private String buttonText = "login";
-    private int cnt = 0;
-    private boolean session = false;
+    private boolean filter = false;
+    private int lessNumber;
+    private int greaterNumber;
+    private String name;
+    private String lastName;
+
+   
+
     private List<Item> records = null;
     
+    
+    
 // --------------------- GETTER / SETTER METHODS ---------------------
-    public String getResponse() {
-        return response;
+
+
+    public void setFilter() {
+        this.filter = filter;
     }
 
-    public void setResponse(String response) {
-        this.response = response;
+    public int getLessNumber() {
+        return lessNumber;
     }
 
-    public String getUsername() {
-        return username;
+    public void setLessNumber(int lessNumber) {
+        this.lessNumber = lessNumber;
     }
 
-    public void setUsername(String username) {
-        this.username = username;
+    public int getGreaterNumber() {
+        return greaterNumber;
     }
 
-    public String getPassword() {
-        return password;
+    public void setGreaterNumber(int greaterNumber) {
+        this.greaterNumber = greaterNumber;
     }
 
-    public void setPassword(String password) {
-        this.password = password;
+    public String getName() {
+        return name;
     }
 
-    public String getButtonText() {
-        return buttonText;
+    public void setName(String name) {
+        this.name = name;
     }
 
-    public void setButtonText(String buttonText) {
-        this.buttonText = buttonText;
+    public String getLastName() {
+        return lastName;
     }
 
-// -------------------------- OTHER METHODS --------------------------
-
-    
-    private void initRecords() {
-        records = new ArrayList<Item>();
-        Item item;
-        item = new Item("Peter", "Griffin", 30);
-        //item.setName("Peter");
-        //item.setLastName("Griffin");
-        //item.setAge(30);
-        records.add(item);
-        item = new Item("Lois", "Griffin", 29);
-        records.add(item);
-        item = new Item("Chris", "Griffin", 16);
-        records.add(item);
-        item = new Item("Meg", "Griffin", 15);
-        records.add(item);
-        item = new Item("Stewie", "Griffin", 1);
-        records.add(item);
-        item = new Item("Brian", "Dog", 10);
-        records.add(item);
-
-        
+    public void setLastName(String lastname) {
+        this.lastName = lastname;
     }
-    
     public List<Item> getRecords() {
         if (records == null) {
             initRecords();
@@ -88,4 +72,30 @@ public class Controler implements Serializable {
         this.records = records;
     }
     
-}
+
+
+// -------------------------- OTHER METHODS --------------------------
+
+  private void initRecords() {
+        records = new ArrayList<Item>();
+        Item item;
+        item = new Item("Peter", "Griffin", 30);
+        item.setName("Peter");
+        item.setLastName("Griffin");
+        item.setAge(30);
+        records.add(item);
+        item = new Item("Lois", "Griffin", 29);
+        records.add(item);
+        item = new Item("Chris", "Griffin", 16);
+        records.add(item);
+        item = new Item("Meg", "Griffin", 15);
+        records.add(item);
+        item = new Item("Stewie", "Griffin", 1);
+        records.add(item);
+        item = new Item("Brian", "Dog", 10);
+        records.add(item); 
+
+        
+    }
+  
+  }
