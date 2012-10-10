@@ -5,13 +5,14 @@
 
     <ui:define name="content">
         <h:form>
+            <a4j:queue requestDelay="500"/>
             <rich:panel>
                 <f:facet name="header">Registration form</f:facet>
                 <h:panelGrid columns="3">
 
                     <h:outputLabel value="email" for="email"/>
                     <h:inputText id="email" value="#{registrationView.user.email}">
-                        <a4j:ajax render="emailMessage"/>
+                        <a4j:ajax render="emailMessage" event="keyup"/>
                     </h:inputText>
                     <rich:message id="emailMessage" for="email" ajaxRendered="false"/>
 
