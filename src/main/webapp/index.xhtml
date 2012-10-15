@@ -4,66 +4,7 @@
                 xmlns:f="http://java.sun.com/jsf/core" xmlns:rich="http://richfaces.org/rich" xmlns:a4j="http://richfaces.org/a4j" template="/template.xhtml">
 
     <ui:define name="content">
-        <h:form>
-            <a4j:queue requestDelay="500"/>
-            <rich:panel>
-                <f:facet name="header">Registration form</f:facet>
-                <h:panelGrid columns="3">
-
-                    <h:outputLabel value="email" for="email"/>
-                    <h:inputText id="email" value="#{registrationView.user.email}">
-                        <a4j:ajax render="emailMessage" event="keyup"/>
-                    </h:inputText>
-                    <rich:message id="emailMessage" for="email" ajaxRendered="false"/>
-
-                    <h:outputLabel value="birth date (yyyy-MM-dd)" for="birthDate"/>
-                    <rich:calendar id="birthDate" value="#{registrationView.user.birthDate}" enableManualInput="true" datePattern="yyyy-MM-dd">
-                        <f:convertDateTime pattern="yyyy-MM-dd"/>
-                        <a4j:ajax render="birthDateMessage"/>
-                    </rich:calendar>
-                    <rich:message id="birthDateMessage" for="birthDate" ajaxRendered="false"/>
-
-                    <h:outputLabel value="lucky number (1-9)" for="luckyNumber"/>
-                    <h:panelGroup>
-                        <h:inputText id="luckyNumber" value="#{registrationView.user.luckyNumber}">
-                            <a4j:ajax render="luckyNumberMessage"/>
-                        </h:inputText>
-                        <rich:tooltip target="luckyNumber">Are you superstitious?</rich:tooltip>
-                    </h:panelGroup>
-                    <rich:message id="luckyNumberMessage" for="luckyNumber" ajaxRendered="false"/>
-
-                    <h:outputLabel value="password" for="password"/>
-                    <h:inputText id="password" value="#{registrationView.password}">
-                        <a4j:ajax render="passwordMessage"/>
-                    </h:inputText>
-                    <rich:message id="passwordMessage" for="password" ajaxRendered="false"/>
-
-                    <h:outputLabel value="country" for="country"/>
-                    <h:selectOneRadio id="country" value="#{registrationView.user.country}" converter="#{registrationView.countryConverter}">
-                        <a4j:ajax render="countryMessage"/>
-                        <f:selectItems value="#{registrationView.availableCountries}" var="c" itemValue="#{c}" itemLabel="#{c.name}"/>
-                    </h:selectOneRadio>
-                    <rich:message id="countryMessage" for="country" ajaxRendered="false"/>
-
-                    <h:outputText/>
-                    <h:commandButton value="Register" action="#{registrationView.register}"/>
-                    <h:commandButton value="Cancel" action="#{registrationView.cancel}" immediate="true"/>
-                </h:panelGrid>
-
-                <a4j:outputPanel ajaxRendered="true">
-                    <h:panelGrid id="preview" columns="2">
-                        <h:outputText value="email"/>
-                        <h:outputText value="#{registrationView.user.email}"/>
-                        <h:outputText value="birth date"/>
-                        <h:outputText value="#{registrationView.user.birthDate}"/>
-                        <h:outputText value="lucky number"/>
-                        <h:outputText value="#{registrationView.user.luckyNumber}"/>
-                        <h:outputText value="country"/>
-                        <h:outputText value="#{registrationView.user.country.name}"/>
-                    </h:panelGrid>
-                </a4j:outputPanel>
-            </rich:panel>
-        </h:form>
+        <ui:include src="login.xhtml"/>
         <rich:notifyMessages globalOnly="true" showHistory="true" showShadow="true"/>
     </ui:define>
 

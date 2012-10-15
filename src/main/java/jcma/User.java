@@ -12,6 +12,10 @@ import java.util.Date;
 public class User implements Serializable {
 // ------------------------------ FIELDS ------------------------------
 
+    @Size(min = 3)
+    @NotNull
+    private String userName;
+
     @NotNull
     private Date birthDate;
 
@@ -87,11 +91,20 @@ public class User implements Serializable {
     public String toString()
     {
         return "User{" +
+            "userName=" + userName +
             "birthDate=" + birthDate +
             ", country=" + country +
             ", email='" + email + '\'' +
             ", luckyNumber=" + luckyNumber +
             ", passwordDigest='" + passwordDigest + '\'' +
             '}';
+    }
+
+    public String getUserName() {
+        return userName;
+    }
+
+    public void setUserName(String userName) {
+        this.userName = userName;
     }
 }

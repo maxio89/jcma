@@ -1,0 +1,84 @@
+
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core" xmlns:rich="http://richfaces.org/rich" xmlns:a4j="http://richfaces.org/a4j">
+
+
+    <h:form>
+        <a4j:queue requestDelay="500"/>
+        <rich:panel>
+            <f:facet name="header">Registration form</f:facet>
+            <h:panelGrid columns="3">
+
+                <h:outputLabel value="userName" for="userName"/>
+                <h:inputText id="userName" value="#{registrationView.user.userName}">
+                    <a4j:ajax render="userNameMessage" event="keyup"/>
+                </h:inputText>
+                <rich:message id="userNameMessage" for="userName" ajaxRendered="false"/>
+
+                <h:outputLabel value="password" for="password"/>
+                <h:inputSecret id="password" value="#{registrationView.password}">
+                    <a4j:ajax render="passwordMessage"/>
+                </h:inputSecret>
+                <rich:message id="passwordMessage" for="password" ajaxRendered="false"/>
+
+                <h:outputLabel value="confirmPassword" for="confirmPassword"/>
+                <h:inputSecret id="confirmPassword" value="#{registrationView.confirmPassword}">
+                    <a4j:ajax render="confirmPasswordMessage"/>
+                </h:inputSecret>
+                <rich:message id="confirmPasswordMessage" for="confirmPassword" ajaxRendered="false"/>
+
+
+                <h:outputLabel value="email" for="email"/>
+                <h:inputText id="email" value="#{registrationView.user.email}">
+                    <a4j:ajax render="emailMessage" event="keyup"/>
+                </h:inputText>
+                <rich:message id="emailMessage" for="email" ajaxRendered="false"/>
+
+                <h:outputLabel value="birth date (yyyy-MM-dd)" for="birthDate"/>
+                <rich:calendar id="birthDate" value="#{registrationView.user.birthDate}" enableManualInput="true" datePattern="yyyy-MM-dd">
+                    <f:convertDateTime pattern="yyyy-MM-dd"/>
+                    <a4j:ajax render="birthDateMessage"/>
+                </rich:calendar>
+                <rich:message id="birthDateMessage" for="birthDate" ajaxRendered="false"/>
+
+                <h:outputLabel value="country" for="country"/>
+                <h:selectOneRadio id="country" value="#{registrationView.user.country}" converter="#{registrationView.countryConverter}">
+                    <a4j:ajax render="countryMessage"/>
+                    <f:selectItems value="#{registrationView.availableCountries}" var="c" itemValue="#{c}" itemLabel="#{c.name}"/>
+                </h:selectOneRadio>
+                <rich:message id="countryMessage" for="country" ajaxRendered="false"/>
+
+                <h:outputLabel value="gender" for="gender"/>
+                <h:selectOneRadio id="gender" value="#{registrationBean.person.gender}">
+                    <a4j:ajax render="genderMessage" event="keyup"/>
+                    <f:selectItems value="#{registrationView.gender}"/>
+                </h:selectOneRadio>
+                <rich:message id="genderMessage" for="gender" ajaxRendered="false"/>
+
+                <h:outputLabel value="jobs" for="jobs"/>
+                <h:selectManyListbox id="jobs" value="#{registrationView.user.job}">
+                    <a4j:ajax render="jobsMessage" event="keyup"/>
+                    <f:selectItems value="#{registrationView.availableJobs}" var="j" itemValue="#{j}" itemLabel="#{j.name}"/>
+                </h:selectManyListbox>
+                <rich:message id="jobsMessage" for="jobs" ajaxRendered="false"/>
+
+                <h:commandButton value="Register" action="#{registrationView.register}"/>
+                <h:commandButton value="Cancel" action="#{registrationView.cancel}" immediate="true"/>
+            </h:panelGrid>
+
+            <a4j:outputPanel ajaxRendered="true">
+                <h:panelGrid id="preview" columns="2">
+                    <h:outputText value="email"/>
+                    <h:outputText value="#{registrationView.user.email}"/>
+                    <h:outputText value="birth date"/>
+                    <h:outputText value="#{registrationView.user.birthDate}"/>
+                    <h:outputText value="lucky number"/>
+                    <h:outputText value="#{registrationView.user.luckyNumber}"/>
+                    <h:outputText value="country"/>
+                    <h:outputText value="#{registrationView.user.country.name}"/>
+                </h:panelGrid>
+            </a4j:outputPanel>
+        </rich:panel>
+    </h:form>
+
+</html>
