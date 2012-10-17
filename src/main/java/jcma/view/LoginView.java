@@ -139,7 +139,9 @@ public class LoginView implements Serializable {
         this.password = password;
     }
 
-
+    public boolean getLogged() {
+        return logged;
+    }
     // -------------------------- OTHER METHODS --------------------------
 
     public void setFilter() {

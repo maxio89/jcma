@@ -1,6 +1,7 @@
 package jcma.data;
 
 import jcma.model.User;
+
 import jcma.model.User_;
 import jcma.view.LoginView;
 
