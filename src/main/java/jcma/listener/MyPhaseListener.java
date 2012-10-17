@@ -28,20 +28,21 @@ import java.util.logging.Logger;
 public class MyPhaseListener implements PhaseListener {
 
 
-    ExternalContext ex = FacesContext.getCurrentInstance().getExternalContext();
-    Object obj = ex.getSessionMap().get("loginView");
-    LoginView bean = (LoginView)obj;
+
     public void afterPhase(PhaseEvent event)
     {
-        if (bean != null) {
-        if (!bean.getLogged())  {
-            HttpServletResponse response = (HttpServletResponse)ex.getResponse();
-            try {
-                response.sendError(503);//send 503 Unauthorized
-            } catch (IOException ex) {
-                Logger.getLogger(MyPhaseListener.class.getName()).log(Level.SEVERE, null, ex);
+        FacesContext fc = FacesContext.getCurrentInstance();
+        Object obj = fc.getExternalContext().getSessionMap().get("loginView");
+        LoginView bean = (LoginView)obj;
+        if (fc.getViewRoot().getViewId().contains("admin") || fc.getViewRoot().getViewId().contains("user")) {
+            if (!bean.getLogged())  {
+                HttpServletResponse response = (HttpServletResponse)fc.getExternalContext().getResponse();
+                try {
+                    response.sendError(503);
+                } catch (IOException ex) {
+                    Logger.getLogger(MyPhaseListener.class.getName()).log(Level.SEVERE, null, ex);
+                }
             }
-        }
         }
     }
 

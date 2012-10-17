@@ -45,6 +45,8 @@ public class RegistrationView implements Serializable {
     List<String> jobs = new ArrayList();
 
 
+    private boolean popupConfirm = false;
+    private boolean popupInfo = false;
 
 // --------------------- GETTER / SETTER METHODS ------------------
     public List getGenders() {
@@ -72,7 +74,21 @@ public class RegistrationView implements Serializable {
         jobs.add("cos");
         return jobs;
     }
+    public boolean isPopupConfirm() {
+        return popupConfirm;
+    }
 
+    public void setPopupConfirm(boolean popupConfirm) {
+        this.popupConfirm = popupConfirm;
+    }
+
+    public boolean isPopupInfo() {
+        return popupInfo;
+    }
+
+    public void setPopupInfo(boolean popupInfo) {
+        this.popupInfo = popupInfo;
+    }
 
 
 // -------------------------- OTHER METHODS --------------------------
@@ -81,7 +97,7 @@ public class RegistrationView implements Serializable {
 
     public void cancel()
     {
-        confirmationPanelVisible = true;
+        popupConfirm = true;
     }
 
 
@@ -89,10 +105,7 @@ public class RegistrationView implements Serializable {
 
     public void proceedWithoutSave()
     {
-//        confirmationPanelVisible = false;
-//        newUser = new User();
-//        password = nu  }
-
+        popupConfirm = false;
 
     }
 
@@ -101,6 +114,7 @@ public class RegistrationView implements Serializable {
 
 
         userDAO.register();
+        popupInfo = true;
 
        }
 
