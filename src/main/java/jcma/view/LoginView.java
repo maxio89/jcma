@@ -1,77 +1,50 @@
 package jcma.view;
 
-import jcma.UserDAO;
+
 import jcma.data.UserListProducer;
 import jcma.model.User;
 
-
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
 import javax.inject.Inject;
 import java.io.Serializable;
-import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * Created with IntelliJ IDEA.
- * User: piotrek
- * Date: 15.10.12
- * Time: 11:44
- * To change this template use File | Settings | File Templates.
- */
 
 @SessionScoped
 @ManagedBean
 public class LoginView implements Serializable {
 
-    @Inject
-    private UserDAO userDAO;
-
-
     private String password;
     private String userName;
-    private String buttonText = "login";
-    private int cnt = 0;
     private boolean logged = false;
     private String include = "login.xhtml";
     private String response = "Welcome Unknown!";
-    @ManagedProperty(value="#{registrationView}")
-    private RegistrationView reg;
-
     private String filterUserName = "";
-    private String filterName = "e";
-    private String filterLastName;
+    private String filterName = "";
+    private String filterLastName = "";;
     private int filterGreater = 0;
     private int filterLess = 50;
-    private String filterGender;
+    private String filterGender = "";;
     List<String> genders = new ArrayList();
-     @Inject
-     private UserListProducer ulp;
+
+    @Inject
+    private UserListProducer userListProducer;
+
+    private List<User> userList;
     private List<User> users;
 
-
-    public List<User> getUsers() {
-
-        users = ulp.getUsers();
-        return users;
-    }
     // --------------------- GETTER / SETTER METHODS ---------------------
-//    public String getResponse() {
-//        return response;
-//    }
-//
-//    public void setResponse(String response) {
-//        this.response = response;
-//    }
 
 
     public List<String> getGenders() {
 
+        if(!genders.isEmpty()) genders.clear();
         genders.add("male");
         genders.add("female");
+        genders.add("");
         return genders;
     }
 
@@ -142,61 +115,6 @@ public class LoginView implements Serializable {
     public boolean getLogged() {
         return logged;
     }
-    // -------------------------- OTHER METHODS --------------------------
-
-    public void setFilter() {
-
-        //UserListProducer ulp = new UserListProducer();
-        //ulp.retrieveAllMembersOrderedByName();
-        //users = ulp.getUsers();
-        //System.out.println("$$$$$$$$$$$" + filterUserName);
-        //System.out.println("$$$$$$$$$$$" + FacesContext.getCurrentInstance().getExternalContext().toString());
-        //System.out.println("$$$$$$$$$$$" + this.toString());
-    }
-
-    public void login() {
-
-        try {
-            userDAO.addMembers();
-        }
-        catch (Exception e) {
-            System.out.println("##################" + e);
-        }
-
-        if (!logged) {
-
-
-            if (userName.equals("admin") && password.equals("admin")) {
-                buttonText = "logout";
-                include = "admin.xhtml";
-                response = "Welcome " + userName + "!";
-                logged = true;
-            } else if (userName.equals("user") && password.equals("user")) {
-                buttonText = "logout";
-                include = "user.xhtml";
-                response = "Welcome " + userName + "!";
-                logged = true;
-            }
-            else {
-                response = "Wrong username or password!!!";
-            }
-
-        } else {
-            FacesContext.getCurrentInstance().getExternalContext().invalidateSession();
-            //response = "Logout!";
-            logged = false;
-        }
-
-    }
-
-    public String getButtonText() {
-        return buttonText;
-    }
-
-    public void setButtonText(String buttonText) {
-        this.buttonText = buttonText;
-    }
-
 
     public void setInclude(String include) {
         this.include = include;
@@ -205,13 +123,6 @@ public class LoginView implements Serializable {
     public String getInclude() {
         return include;
     }
-
-    public void foo(String value) {
-
-        include = value;
-
-    }
-
     public String getResponse() {
         return response;
     }
@@ -220,15 +131,84 @@ public class LoginView implements Serializable {
         this.response = response;
     }
 
-    public boolean isLogged() {
-        return logged;
+    public List<User> getUsers() {
+        return users;
     }
 
-    public void setLogged(boolean logged) {
-        this.logged = logged;
+    public void setUsers(List<User> users) {
+        this.users = users;
+    }
+    // -------------------------- OTHER METHODS --------------------------
+
+    public void setFilter() {
+
+        if(!users.isEmpty()) users = new ArrayList<User>();
+
+        for(User user: userList) {
+            int age = user.getAge();
+
+            if (user.getUserName().contains(filterUserName)
+                    && user.getName().contains(filterName) && user.getLastName().contains(filterLastName)
+                    && age > filterGreater && age < filterLess )   {
+
+//                filterGender.replaceAll("\\s+","");
+//                user.getGender().replaceAll("\\s+","");
+                if (filterGender != null && filterGender.equals(user.getGender())) {
+                    users.add(user);
+                }
+                else if (filterGender == null || filterGender.equals("")) {
+                    users.add(user);
+                }
+
+            }
+
+        }
+
+
     }
 
-    public void setReg(RegistrationView reg) {
-        this.reg = reg;
+    public void login() {
+
+        if (!logged) {
+
+            if (userList == null) {
+                userList = userListProducer.getUsers();
+                users = userList;
+            }
+
+            if (userName.equals("admin") && password.equals("admin")) {
+
+                include = "admin.xhtml";
+                response = "Welcome " + userName + "!";
+                logged = true;
+            } else  {
+
+                boolean check = false;
+                if (userList.isEmpty()) System.out.println("########## EMPTY");
+                for(User user: userList) {
+                    if (user.getUserName().equals(userName) && user.getPasswordDigest().equals(password))
+                        check = true;
+                }
+
+                if (check) {
+
+                    include = "user.xhtml";
+                    response = "Welcome " + userName + "!";
+                    logged = true;
+                }
+                else {
+
+                    response = "Wrong username or password!!!";
+                }
+
+            }
+
+        } else {
+            FacesContext.getCurrentInstance().getExternalContext().invalidateSession();
+            logged = false;
+        }
+
     }
+
+
 }

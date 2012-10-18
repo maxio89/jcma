@@ -6,8 +6,6 @@
             <a4j:queue requestDelay="500"/>
             <rich:panel styleClass="panelMain">
                 <f:facet name="header">Admin form</f:facet>
-                <a4j:commandButton id="send" action="#{loginView.setFilter}" value="Set filter" render="records"/>
-
 
                 <rich:panel>
                     <f:facet name="header">
@@ -24,14 +22,13 @@
                     <b> and &lt;</b>
                     <rich:inputNumberSpinner value="#{loginView.filterLess}" step="2" />
                     <b> Gender: </b>
-                    <rich:select value="#{loginView.filterGender}">
+                    <rich:select value="#{loginView.filterGender}" selectFirst="true">
                         <f:selectItems value="#{loginView.genders}" />
                     </rich:select>
                 </rich:panel>
+                <h:commandButton id="send" action="#{loginView.setFilter}" value="Set filter" render="records"/>
 
-
-
-                <rich:dataTable var="_user" value="#{users}" id="records">
+                <rich:dataTable var="_user" value="#{loginView.users}" id="records">
                     <rich:column>
                         <f:facet name="header">UserName</f:facet>
                         #{_user.userName}
@@ -66,7 +63,6 @@
                     </h:column>
 
                 </rich:dataTable>
-
 
                 <h:commandButton value="Logout" action="#{loginView.login}"/>
             </rich:panel>

@@ -27,13 +27,13 @@
                     <rich:message id="userNameMessage" for="userName" ajaxRendered="false"/>
 
                     <h:outputLabel value="Password:" for="password"/>
-                    <h:inputSecret id="password" value="#{newUser.password}">
+                    <h:inputSecret id="password" value="#{newUser.password}" redisplay="true">
                         <a4j:ajax render="passwordMessage"/>
                     </h:inputSecret>
                     <rich:message id="passwordMessage" for="password" ajaxRendered="false"/>
 
                     <h:outputLabel value="ConfirmPassword:" for="confirmPassword"/>
-                    <h:inputSecret id="confirmPassword" value="#{newUser.confirmPassword}">
+                    <h:inputSecret id="confirmPassword" value="#{newUser.confirmPassword}" redisplay="true">
                         <a4j:ajax render="confirmPasswordMessage"/>
                     </h:inputSecret>
                     <rich:message id="confirmPasswordMessage" for="confirmPassword" ajaxRendered="false"/>
@@ -99,7 +99,7 @@
                                 X
                             </h:outputLink>
                         </f:facet>
-                        <p><h:commandLink value="Cancel" action="#{registrationView.proceedWithoutSave}" /> </p>
+                        <p><h:commandLink value="Cancel" action="#{registrationView.proceedWithoutSave}" immediate="true"/> </p>
                         <p><h:commandLink value="Register" action="#{registrationView.register}" /> </p>
                     </rich:popupPanel>
 

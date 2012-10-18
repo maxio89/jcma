@@ -1,4 +1,4 @@
-package jcma;
+package jcma.dao;
 
 import jcma.model.User;
 
@@ -41,9 +41,7 @@ public class UserDAO {
     @Inject
     private EntityManager em;
 
-
     private User newUser;
-
 
     @Produces
     @Named
@@ -55,9 +53,7 @@ public class UserDAO {
     @PostConstruct
     public void initNewMember() throws NoSuchAlgorithmException
     {
-
         newUser = new User();
-
     }
 
     public void addMembers() throws NoSuchAlgorithmException, ParseException
@@ -90,7 +86,7 @@ public class UserDAO {
                 register();
             }
             catch (Exception e) {
-                System.out.println("&&&&&&&&&&&&&&&&&& " + e);
+                System.out.println("####################" + e);
             }
             i++;
 
@@ -103,7 +99,6 @@ public class UserDAO {
     {
 
         //FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("User has been successfully registered: " + user));
-
         em.persist(newUser);
         memberEventSrc.fire(newUser);
         initNewMember();

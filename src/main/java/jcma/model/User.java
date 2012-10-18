@@ -12,12 +12,10 @@ import java.security.NoSuchAlgorithmException;
 import java.util.Calendar;
 import java.util.Date;
 
-
 @Entity
 @Table(uniqueConstraints = @UniqueConstraint(columnNames = "userName"))
 public class User implements Serializable {
 // ------------------------------ FIELDS ------------------------------
-
 
     @Size(min = 3, max = 20)
     @NotNull
@@ -31,7 +29,6 @@ public class User implements Serializable {
     @Size(min = 3, max = 20)
     @NotNull
     private String lastName;
-
 
     @NotNull
     private String country;
@@ -65,27 +62,7 @@ public class User implements Serializable {
 
     private String passwordDigest;
 
-
     // --------------------- GETTER / SETTER METHODS ---------------------
-    private int DateToAge(Date birthDate) {
-
-        int age;
-        Calendar born = Calendar.getInstance();
-        Calendar now = Calendar.getInstance();
-        if(birthDate!= null) {
-            now.setTime(new Date());
-            born.setTime(birthDate);
-            if(born.after(now)) {
-                throw new IllegalArgumentException("Can't be born in the future");
-            }
-            age = now.get(Calendar.YEAR) - born.get(Calendar.YEAR);
-            if(now.get(Calendar.DAY_OF_YEAR) < born.get(Calendar.DAY_OF_YEAR))  {
-                age-=1;
-            }
-            return age;
-        }
-        return 0;
-    }
 
     public Date getBirthDate() {
         return birthDate;
@@ -126,7 +103,6 @@ public class User implements Serializable {
     public void setPasswordDigest(String passwordDigest) throws NoSuchAlgorithmException
     {
         //final MessageDigest md5 = MessageDigest.getInstance("MD5");
-
         //this.passwordDigest = new String(md5.digest(password.getBytes()));
         this.passwordDigest = password;
 
@@ -137,6 +113,7 @@ public class User implements Serializable {
     }
 
     public void setPassword(String password) {
+        passwordDigest = password;
         this.password = password;
     }
 
@@ -196,19 +173,27 @@ public class User implements Serializable {
         this.age = age;
     }
 
-// ------------------------ CANONICAL METHODS ------------------------
+// ------------------------ OTHER METHODS ------------------------
 
-    @Override
-    public String toString()
-    {
-        return "User{" +
-                "login=" + userName +
-                ", country=" + country +
-                ", email='" + email + '\'' +
-                ", passwordDigest='" + passwordDigest + '\'' +
-                '}';
+    private int DateToAge(Date birthDate) {
+
+        int age;
+        Calendar born = Calendar.getInstance();
+        Calendar now = Calendar.getInstance();
+        if(birthDate!= null) {
+            now.setTime(new Date());
+            born.setTime(birthDate);
+            if(born.after(now)) {
+                throw new IllegalArgumentException("Can't be born in the future");
+            }
+            age = now.get(Calendar.YEAR) - born.get(Calendar.YEAR);
+            if(now.get(Calendar.DAY_OF_YEAR) < born.get(Calendar.DAY_OF_YEAR))  {
+                age-=1;
+            }
+            return age;
+        }
+        return 0;
     }
-
 
 
 }

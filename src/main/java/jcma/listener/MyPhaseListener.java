@@ -16,14 +16,6 @@ import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-/**
- * Created with IntelliJ IDEA.
- * User: piotrek
- * Date: 16.10.12
- * Time: 18:39
- * To change this template use File | Settings | File Templates.
- */
-
 
 public class MyPhaseListener implements PhaseListener {
 
