@@ -53,4 +53,9 @@ public class PostDAO {
             .createQuery();
         return fullTextEntityManager.createFullTextQuery(fullTextQuery, Post.class).getResultList();
     }
+
+    public List<Post> range(int from, int number)
+    {
+        return entityManager.createQuery("select p from Post p").setFirstResult(from).setMaxResults(number).getResultList();
+    }
 }
