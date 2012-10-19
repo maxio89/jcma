@@ -58,4 +58,9 @@ public class PostDAO {
     {
         return entityManager.createQuery("select p from Post p").setFirstResult(from).setMaxResults(number).getResultList();
     }
+
+    public Long getCount()
+    {
+        return (Long) entityManager.createQuery("select count(p) from Post p").getSingleResult();
+    }
 }
