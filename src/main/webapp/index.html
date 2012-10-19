@@ -39,6 +39,9 @@
     function loadCounter(data)
     {
         counter = data;
+        var cntr = jQuery("#cntr");
+        cntr.empty();
+        cntr.append("Counter(<b>"+counter+"</b>)");
     }
     function removePost(id)
     {
@@ -50,9 +53,6 @@
     function loadPosts(data)
     {
         reloadCounter();
-        var cntr = jQuery("#cntr");
-        cntr.empty();
-        cntr.append("Counter(<b>"+counter+"</b>)");
         var posts = jQuery("#posts");
         posts.empty();
         for (var i = 0; i < data.length; i++) {
@@ -63,19 +63,19 @@
             posts.append(post);
         }
     }
-    function reloadPosts()
+    function reloadPosts(show)
     {
-
+        reloadCounter();
         var form = jQuery("form#controls");
         var from = jQuery("#from", form).val();
         var number = jQuery("#number", form).val();
-        if (number == "" || from == "")
+        if ((number == "" || from == "") && show)
         {
             showAlert("Error! Field 'From' or 'Number' is empty!");
         }
         else
         {
-            if(isNaN(number) || isNaN(from))
+            if ((isNaN(number) || isNaN(from)) && show)
             {
                 showAlert("Error! Field 'From' or 'Number' is not a number!");
             }
@@ -104,18 +104,19 @@
         var form = jQuery("form#controls");
         jQuery("#refresh", form).click(function ()
         {
-            reloadPosts();
+            reloadPosts(true);
         });
 
         jQuery("#add", form).click(function ()
         {
             var title = jQuery("#title", form).val();
             var content = jQuery("#content", form).val();
-            jQuery.ajax("api/post/add", {complete:reloadPosts, data:{title:title, content:content}});
+            jQuery.ajax("api/post/add", {complete:reloadPosts(false), data:{title:title, content:content}});
+            reloadCounter();
         });
 
     });
 </script>
-<script type="text/javascript" src="api/post/range/0/5?responseType=application/json-in-script&methodName=loadPosts"></script>
+<script type="text/javascript" src="api/post/range/0/100?responseType=application/json-in-script&methodName=loadPosts"></script>
 </body>
 </html>
